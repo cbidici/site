@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <title>Blog Home</title>
+</head>
+<body>
+
+<h1>Welcome to My Blog</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Title</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="post : ${posts}">
+    <td><a th:href="@{/post/{id}(id=${post.id})}" th:text="${post.title}">View</a></td>
+    <td>
+      <a th:href="@{/post/edit/{id}(id=${post.id})}" sec:authorize="isAuthenticated()">Edit</a>
+      <a th:href="@{/post/delete/{id}(id=${post.id})}" sec:authorize="isAuthenticated()" onclick="return confirm('Are you sure?')">Delete</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<br/>
+<a th:href="@{/post/new}" sec:authorize="isAuthenticated()">Create New Post</a>
+
+<br/><br/>
+<!-- Authentication links -->
+<a th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
+<a th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
+
+</body>
+</html>
