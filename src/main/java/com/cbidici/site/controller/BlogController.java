@@ -43,7 +43,7 @@ public class BlogController {
 
   @PostMapping("/post/save")
   public String savePost(@ModelAttribute("post") Post post) {
-    postService.savePost(post);
+    postService.createPost(post);
     return "redirect:/";
   }
 

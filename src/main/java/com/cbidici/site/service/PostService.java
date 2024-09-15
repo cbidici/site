@@ -18,7 +18,7 @@ public class PostService {
     return postRepository.findAllByOrderByCreatedAtDesc();
   }
 
-  public void savePost(Post post) {
+  public void createPost(Post post) {
     post.setCreatedAt(LocalDateTime.now());
     postRepository.save(post);
   }
@@ -27,13 +27,15 @@ public class PostService {
     return postRepository.findById(id);
   }
 
-  public Post updatePost(Long id, Post updatedPost) {
-    return postRepository.findById(id).map(post -> {
-      post.setTitle(updatedPost.getTitle());
-      post.setContent(updatedPost.getContent());
-      post.setCreatedAt(LocalDateTime.now());
-      return postRepository.save(post);
-    }).orElseThrow(() -> new IllegalArgumentException("Invalid post ID: " + id));
+  public void updatePost(Long id, Post updatedPost) {
+    postRepository.findById(id).ifPresentOrElse(
+        post -> {
+          post.setTitle(updatedPost.getTitle());
+          post.setContent(updatedPost.getContent());
+          post.setCreatedAt(LocalDateTime.now());
+          postRepository.save(post);
+        },
+        () -> {throw new IllegalArgumentException("Invalid post ID: " + id);});
   }
 
   public void deletePost(Long id) {
