@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}">
+<head>
+  <title>Posts</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <a th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
+  <a th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
+  <a th:href="@{/post/new}" sec:authorize="isAuthenticated()">Create New Post</a>
+  <h1>Welcome to My Blog</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>Title</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="post : ${posts}">
+      <td><a th:href="@{/post/{id}(id=${post.id})}" th:text="${post.title}">View</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

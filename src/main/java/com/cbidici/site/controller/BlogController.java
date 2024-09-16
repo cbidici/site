@@ -23,7 +23,7 @@ public class BlogController {
   public String viewHomePage(Model model) {
     List<Post> posts = postService.getAllPosts();
     model.addAttribute("posts", posts);
-    return "index";  // Render the "index.html" Thymeleaf template
+    return "posts";
   }
 
   @GetMapping("/post/{id}")

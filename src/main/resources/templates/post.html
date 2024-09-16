@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html layout:decorate="~{base}">
 <head>
   <title th:text="${post.title}">Post Title</title>
-  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<h1 th:text="${post.title}">Post Title</h1>
-<div class="post-content" th:utext="${content}"></div>
-
-<a th:href="@{/post/edit/{id}(id=${post.id})}">Edit</a> |
-<a th:href="@{/post/delete/{id}(id=${post.id})}" onclick="return confirm('Are you sure you want to delete this post?')">Delete</a>
-<a href="/">Back to blog</a>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
-<script>hljs.highlightAll();</script>
+<div layout:fragment="content">
+  <span><a href="/">Back to Blog</a></span>
+  <span sec:authorize="isAuthenticated()"> | <a th:href="@{/post/edit/{id}(id=${post.id})}">Edit</a> | <a th:href="@{/post/delete/{id}(id=${post.id})}" onclick="return confirm('Are you sure you want to delete this post?')">Delete</a></span>
+  <h1 th:text="${post.title}">Post Title</h1>
+  <div class="post-content" th:utext="${content}"></div>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+</div>
 </body>
 </html>
