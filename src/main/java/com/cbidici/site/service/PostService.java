@@ -1,5 +1,6 @@
 package com.cbidici.site.service;
 
+import com.cbidici.site.entity.Status;
 import com.cbidici.site.repository.PostRepository;
 import com.cbidici.site.entity.Post;
 import java.time.LocalDateTime;
@@ -32,7 +33,10 @@ public class PostService {
         post -> {
           post.setTitle(updatedPost.getTitle());
           post.setContent(updatedPost.getContent());
-          post.setCreatedAt(LocalDateTime.now());
+          post.setStatus(updatedPost.getStatus());
+          if(Status.PUBLISHED != post.getStatus() && Status.PUBLISHED == updatedPost.getStatus()) {
+            post.setPublishedAt(LocalDateTime.now());
+          }
           postRepository.save(post);
         },
         () -> {throw new IllegalArgumentException("Invalid post ID: " + id);});
@@ -40,5 +44,9 @@ public class PostService {
 
   public void deletePost(Long id) {
     postRepository.deleteById(id);
+  }
+
+  public List<Post> getPublished() {
+    return postRepository.findByStatus(Status.PUBLISHED);
   }
 }

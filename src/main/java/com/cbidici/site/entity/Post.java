@@ -2,6 +2,8 @@ package com.cbidici.site.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,11 +29,11 @@ public class Post {
   private User user;
   private String title;
   private String content;
+  @Enumerated(EnumType.STRING)
+  private Status status;
   @Column(name = "created_at")
   private LocalDateTime createdAt;
   @Column(name = "published_at")
   private LocalDateTime publishedAt;
-  @Column(name = "updated_at")
-  private LocalDateTime updated_at;
 }
 

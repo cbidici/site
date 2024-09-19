@@ -1,0 +1,1 @@
+UPDATE post SET status = 'PUBLISHED';

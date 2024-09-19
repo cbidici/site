@@ -1,0 +1,2 @@
+ALTER TABLE post DROP COLUMN updated_at;
+ALTER TABLE post ADD COLUMN status TEXT;
