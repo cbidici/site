@@ -65,7 +65,7 @@ public class PostServiceTest {
     verify(repository).save(postCaptor.capture());
     assertThat(postCaptor.getValue().getTitle()).isEqualTo("Update Title");
     assertThat(postCaptor.getValue().getContent()).isEqualTo("Update Content");
-    assertThat(postCaptor.getValue().getCreatedAt()).isAfter(localDateTime);
+    assertThat(postCaptor.getValue().getCreatedAt()).isEqualTo(localDateTime);
   }
 
   @Test
