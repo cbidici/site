@@ -21,6 +21,9 @@ public class PostService {
 
   public void createPost(Post post) {
     post.setCreatedAt(LocalDateTime.now());
+    if(Status.PUBLISHED != post.getStatus()) {
+      post.setPublishedAt(LocalDateTime.now());
+    }
     postRepository.save(post);
   }
 
@@ -47,6 +50,6 @@ public class PostService {
   }
 
   public List<Post> getPublished() {
-    return postRepository.findByStatus(Status.PUBLISHED);
+    return postRepository.findByStatusOrderByCreatedAtDesc(Status.PUBLISHED);
   }
 }
