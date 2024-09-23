@@ -19,12 +19,14 @@ public class SecurityConfig {
     http
         .authorizeHttpRequests(
             auth -> auth
-                .requestMatchers("/", "/post/{id}", "/css/**", "/js/**", "/robots.txt").permitAll()
+                .requestMatchers("/", "/posts", "/post/{id}", "/posts/{id}", "/css/**", "/js/**",
+                    "/images/**", "/error", "/robots.txt").permitAll()
                 .anyRequest().authenticated()
         ).formLogin(login -> login
+            .defaultSuccessUrl("/")
             .permitAll()
             .loginPage("/login")
-        ).logout(logout -> logout.logoutUrl("/logout"));
+        ).logout(login -> login.logoutSuccessUrl("/"));
     return http.build();
   }
 

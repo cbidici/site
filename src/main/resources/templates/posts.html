@@ -5,22 +5,17 @@
 </head>
 <body>
 <div layout:fragment="content">
-  <a th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
-  <a th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
-  <a th:href="@{/post/create}" sec:authorize="hasRole('ADMIN')">Create New Post</a>
-  <h1>Posts in Coşkun’s Software Sandbox</h1>
-  <table>
-    <thead>
-    <tr>
-      <th>Title</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="post : ${posts}">
-      <td><a th:href="@{/post/{id}(id=${post.id})}" th:text="${post.title}">View</a></td>
-    </tr>
-    </tbody>
-  </table>
+  <section sec:authorize="hasRole('ADMIN')" class="mb-3">
+    <a class="link-primary" th:href="@{/posts/create}">Create New Post</a>
+  </section>
+  <section class="mb-3">
+    <article th:each="post : ${posts}" class="card mb-3">
+      <div class="card-body">
+        <a class="card-title" th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}">View</a>
+        <p class="card-text"><small class="text-body-secondary" th:text="'Created At ' + ${post.createdAt}"></small></p>
+      </div>
+    </article>
+  </section>
 </div>
 </body>
 </html>

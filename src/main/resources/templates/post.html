@@ -5,13 +5,16 @@
 </head>
 <body>
 <div layout:fragment="content">
-  <span><a href="/">Back to Blog</a></span>
-  <span sec:authorize="hasRole('ADMIN')"> | <a th:href="@{/post/{id}/update(id=${post.id})}">Edit</a> | <a th:href="@{/post/delete/{id}(id=${post.id})}" onclick="return confirm('Are you sure you want to delete this post?')">Delete</a></span>
-  <h1 th:text="${post.title}">Post Title</h1>
-  <div class="post-content" th:utext="${content}"></div>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
+  <section class="mb-3">
+    <a class="link-primary" th:href="@{/posts}">Back to Posts</a><span sec:authorize="hasRole('ADMIN')"> | <a class="link-primary" th:href="@{/posts/{id}/update(id=${post.id})}">Edit</a> | <a class="link-primary" th:href="@{/posts/delete/{id}(id=${post.id})}" onclick="return confirm('Are you sure you want to delete this post?')">Delete</a></span>
+  </section>
+  <section class="mb-3">
+    <h1 th:text="${post.title}">Post Title</h1>
+    <div class="post-content" th:utext="${content}"></div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+  </section>
 </div>
 </body>
 </html>

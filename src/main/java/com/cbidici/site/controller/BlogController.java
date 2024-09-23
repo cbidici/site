@@ -4,7 +4,6 @@ import com.cbidici.site.entity.Post;
 import com.cbidici.site.service.MarkdownService;
 import com.cbidici.site.service.PostService;
 import jakarta.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +22,12 @@ public class BlogController {
   private final MarkdownService markdownService;
 
   @GetMapping("/")
-  public String viewHomePage(HttpServletRequest request, Model model) {
+  public String index() {
+    return "redirect:/posts";
+  }
+
+  @GetMapping("/posts")
+  public String posts(HttpServletRequest request, Model model) {
     List<Post> posts;
     if (request.isUserInRole("ROLE_ADMIN")) {
       posts = postService.getAllPosts();
@@ -35,45 +39,50 @@ public class BlogController {
   }
 
   @GetMapping("/post/{id}")
+  public String oldViewPost(@PathVariable("id") Long id) {
+    return "redirect:/posts/"+id;
+  }
+
+  @GetMapping( "/posts/{id}")
   public String viewPost(@PathVariable("id") Long id, Model model) {
     Post post = postService.getPostById(id).orElseThrow(() -> new IllegalArgumentException("Invalid post id: " + id));
     String htmlContent = markdownService.convertToHtml(post.getContent());
     model.addAttribute("post", post);
-    model.addAttribute("content", htmlContent);  // Rendered HTML content
+    model.addAttribute("content", htmlContent);
     return "post";
   }
 
   @PreAuthorize("hasRole('ADMIN')")
-  @GetMapping("/post/create")
+  @GetMapping("/posts/create")
   public String showNewPostForm(Model model) {
     model.addAttribute("post", new Post());
-    return "create-post";
+    return "post-create";
   }
 
   @PreAuthorize("hasRole('ADMIN')")
-  @PostMapping("/post/create")
+  @PostMapping("/posts/create")
   public String savePost(@ModelAttribute("post") Post post) {
     postService.createPost(post);
     return "redirect:/";
   }
 
   @PreAuthorize("hasRole('ADMIN')")
-  @GetMapping("/post/{id}/update")
+  @GetMapping("/posts/{id}/update")
   public String showUpdateForm(@PathVariable("id") Long id, Model model) {
     Post post = postService.getPostById(id).orElseThrow(() -> new IllegalArgumentException("Invalid post ID: " + id));
     model.addAttribute("post", post);
-    return "edit-post";  // edit-post.html template
+    return "post-update";  // edit-post.html template
   }
 
   @PreAuthorize("hasRole('ADMIN')")
-  @PostMapping("/post/{id}")
+  @PostMapping("/posts/{id}")
   public String updatePost(@PathVariable("id") Long id, @ModelAttribute("post") Post post) {
     postService.updatePost(id, post);
     return "redirect:/";  // Redirect back to the home page after update
   }
 
   @PreAuthorize("hasRole('ADMIN')")
-  @GetMapping("/post/delete/{id}")
+  @GetMapping("/posts/delete/{id}")
   public String deletePost(@PathVariable("id") Long id) {
     postService.deletePost(id);
     return "redirect:/";  // Redirect back to the home page after deletion
