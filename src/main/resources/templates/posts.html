@@ -9,11 +9,13 @@
     <a class="link-primary" th:href="@{/posts/create}">Create New Post</a>
   </section>
   <section class="mb-3">
-    <article th:each="post : ${posts}" class="card mb-3">
-      <div class="card-body">
-        <a class="card-title" th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}">View</a>
-        <p class="card-text"><small class="text-body-secondary" th:text="'Created At ' + ${post.createdAt}"></small></p>
-      </div>
+    <article th:each="post : ${posts}" class="shadow-sm mb-3 p-3 bg-white">
+      <a class="card-title text-decoration-none" th:href="@{/posts/{id}(id=${post.id})}">
+        <div class="card-body">
+          <span class="card-title" th:text="${post.title}">Title</span>
+          <p class="card-text"><small class="text-body-secondary" th:text="'Created At ' + ${post.createdAt}"></small></p>
+        </div>
+      </a>
     </article>
   </section>
 </div>
