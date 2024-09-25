@@ -1,0 +1,47 @@
+body {
+  background-color:rgb(250, 250, 250)
+}
+
+* {
+  -webkit-border-radius: 0.200rem !important;
+     -moz-border-radius: 0.200rem !important;
+          border-radius: 0.200rem !important;
+}
+
+.svg-logo{
+  width: 1.6em;
+  height: 1.6em;
+  display: inline-block;
+  vertical-align: -0.48em;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url(/images/logo.svg);
+}
+
+.footer-line {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.footer-line::before,
+.footer-line::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #C4C4C5;
+}
+
+.footer-line:not(:empty)::before {
+  margin-right: .25em;
+}
+
+.footer-line:not(:empty)::after {
+  margin-left: .25em;
+}
+
+.footer-line a {
+  color: #000000;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+}
