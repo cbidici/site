@@ -1,0 +1,16 @@
+.profile-pic {
+    padding: 1em;
+    text-align: center;
+}
+
+.profile-pic img{
+  border-radius: 50%;
+  height: 13em;
+  width: 13em;
+}
+
+.vertical-align {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
