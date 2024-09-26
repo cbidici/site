@@ -21,11 +21,6 @@ public class BlogController {
   private final PostService postService;
   private final MarkdownService markdownService;
 
-  @GetMapping("/")
-  public String index() {
-    return "redirect:/posts";
-  }
-
   @GetMapping("/posts")
   public String posts(HttpServletRequest request, Model model) {
     List<Post> posts;
