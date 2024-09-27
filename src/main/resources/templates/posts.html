@@ -11,7 +11,7 @@
   </section>
   <section class="mb-3">
     <article th:each="post : ${posts}" class="shadow-sm mb-3 p-3 bg-white">
-      <a class="card-title text-decoration-none" th:href="@{/posts/{id}(id=${post.id})}">
+      <a class="card-title text-decoration-none" th:href="@{{url}(url=${post.url})}">
         <div class="card-body">
           <span class="card-title" th:text="${post.title}">Title</span>
           <p class="card-text">

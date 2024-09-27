@@ -35,5 +35,7 @@ public class Post {
   private LocalDateTime createdAt;
   @Column(name = "published_at")
   private LocalDateTime publishedAt;
+  @Column(name = "read_count")
+  private int readCount;
 }
 

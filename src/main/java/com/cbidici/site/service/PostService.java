@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Limit;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -50,6 +51,23 @@ public class PostService {
   }
 
   public List<Post> getPublished() {
-    return postRepository.findByStatusOrderByCreatedAtDesc(Status.PUBLISHED);
+    return postRepository.findByStatusOrderByPublishedAtDesc(Status.PUBLISHED);
+  }
+
+  public List<Post> getRecent() {
+    return postRepository.findByStatusOrderByPublishedAtDesc(Limit.of(5), Status.PUBLISHED);
+  }
+
+  public List<Post> getMostRead() {
+    return postRepository.findByStatusOrderByReadCountDescCreatedAtDesc(Limit.of(5), Status.PUBLISHED);
+  }
+
+  public void incrementRead(Long id) {
+    postRepository.findById(id).ifPresent(
+        post -> {
+          post.setReadCount(post.getReadCount()+1);
+          postRepository.save(post);
+        }
+    );
   }
 }

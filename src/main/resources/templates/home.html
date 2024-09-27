@@ -7,9 +7,32 @@
 <body>
 <div layout:fragment="content">
   <section class="mb-3">
-    <div class="shadow-sm mb-3 p-3 bg-white">
-      <div class="card-body">
-        HOME
+    <div class="row">
+      <div class="col-lg shadow-sm mb-3 p-3 bg-white m-2">
+        <blockquote class="m-2 fs-5">
+          <p class="mb-4 lh-sm" th:text="${quote.getFirst()}"></p>
+          <footer class="blockquote-footer" th:text="${quote.getLast()}"></footer>
+        </blockquote>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg shadow-sm mb-3 p-3 bg-white m-2">
+        <div class="card-body">
+          <span class="card-title">Recently Added</span>
+          <hr>
+          <ul class="px-4">
+            <li th:each="post : ${mostRecent}"><a class="link-dark link-underline link-underline-opacity-0 link-underline-opacity-100-hover" th:href="@{post.url}"><div class="mb-2 mt-2" th:text="${post.title}">Title</div></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg shadow-sm mb-3 p-3 bg-white m-2">
+        <div class="card-body">
+          <span class="card-title">Most Read</span>
+          <hr>
+          <ul class="px-4">
+            <li th:each="post : ${mostRead}"><a class="link-dark link-underline link-underline-opacity-0 link-underline-opacity-100-hover" th:href="@{post.url}"><div class="mb-2 mt-2" th:text="${post.title}">Title</div></a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>

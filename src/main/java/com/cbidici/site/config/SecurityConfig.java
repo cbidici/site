@@ -19,7 +19,7 @@ public class SecurityConfig {
     http
         .authorizeHttpRequests(
             auth -> auth
-                .requestMatchers("/", "/posts", "/post/{id}", "/posts/{id}",
+                .requestMatchers("/", "/posts", "/post/{id}", "/posts/{id}", "/posts/*/{id}",
                     "/home", "/about", "/css/**", "/js/**", "/images/**", "/error",
                     "/robots.txt")
                 .permitAll()

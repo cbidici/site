@@ -1,8 +1,10 @@
 package com.cbidici.site.controller;
 
+import com.cbidici.site.controller.data.PostCardResponse;
 import com.cbidici.site.entity.Post;
 import com.cbidici.site.service.MarkdownService;
 import com.cbidici.site.service.PostService;
+import com.github.slugify.Slugify;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -20,27 +22,49 @@ public class BlogController {
 
   private final PostService postService;
   private final MarkdownService markdownService;
+  private final Slugify slugify;
 
   @GetMapping("/posts")
   public String posts(HttpServletRequest request, Model model) {
-    List<Post> posts;
+    List<PostCardResponse> posts;
     if (request.isUserInRole("ROLE_ADMIN")) {
-      posts = postService.getAllPosts();
+      posts = postService.getAllPosts().stream()
+          .map(post -> PostCardResponse.builder()
+              .id(post.getId())
+              .title(post.getTitle())
+              .status(post.getStatus())
+              .createdAt(post.getCreatedAt())
+              .publishedAt(post.getPublishedAt())
+              .url("/posts/"+slugify.slugify(post.getTitle())+"/"+post.getId())
+              .build())
+          .toList();
     } else {
-      posts = postService.getPublished();
+      posts = postService.getPublished().stream()
+          .map(post -> PostCardResponse.builder()
+              .id(post.getId())
+              .title(post.getTitle())
+              .status(post.getStatus())
+              .publishedAt(post.getPublishedAt())
+              .url("/posts/"+slugify.slugify(post.getTitle())+"/"+post.getId())
+              .build())
+          .toList();
     }
     model.addAttribute("posts", posts);
     return "posts";
   }
 
-  @GetMapping("/post/{id}")
+  @GetMapping("/posts/{id}")
   public String oldViewPost(@PathVariable("id") Long id) {
-    return "redirect:/posts/"+id;
+    var post = postService.getPostById(id).orElseThrow(() -> new IllegalArgumentException("Invalid post id: " + id));
+    return "redirect:/posts/" + slugify.slugify(post.getTitle()) + "/" + id;
   }
 
-  @GetMapping( "/posts/{id}")
-  public String viewPost(@PathVariable("id") Long id, Model model) {
+  @GetMapping( "/posts/*/{id}")
+  public String viewPost(@PathVariable("id") Long id, HttpServletRequest request, Model model) {
     Post post = postService.getPostById(id).orElseThrow(() -> new IllegalArgumentException("Invalid post id: " + id));
+    if (!request.isUserInRole("ROLE_ADMIN")) {
+      postService.incrementRead(id);
+    }
     String htmlContent = markdownService.convertToHtml(post.getContent());
     model.addAttribute("post", post);
     model.addAttribute("content", htmlContent);
