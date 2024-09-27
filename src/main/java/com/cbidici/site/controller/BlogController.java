@@ -66,20 +66,20 @@ public class BlogController {
   public String showUpdateForm(@PathVariable("id") Long id, Model model) {
     Post post = postService.getPostById(id).orElseThrow(() -> new IllegalArgumentException("Invalid post ID: " + id));
     model.addAttribute("post", post);
-    return "post-update";  // edit-post.html template
+    return "post-update";
   }
 
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping("/posts/{id}")
   public String updatePost(@PathVariable("id") Long id, @ModelAttribute("post") Post post) {
     postService.updatePost(id, post);
-    return "redirect:/";  // Redirect back to the home page after update
+    return "redirect:/posts/"+id;
   }
 
   @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/posts/delete/{id}")
   public String deletePost(@PathVariable("id") Long id) {
     postService.deletePost(id);
-    return "redirect:/";  // Redirect back to the home page after deletion
+    return "redirect:/posts";
   }
 }

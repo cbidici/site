@@ -36,10 +36,10 @@ public class PostService {
         post -> {
           post.setTitle(updatedPost.getTitle());
           post.setContent(updatedPost.getContent());
-          post.setStatus(updatedPost.getStatus());
           if(Status.PUBLISHED != post.getStatus() && Status.PUBLISHED == updatedPost.getStatus()) {
             post.setPublishedAt(LocalDateTime.now());
           }
+          post.setStatus(updatedPost.getStatus());
           postRepository.save(post);
         },
         () -> {throw new IllegalArgumentException("Invalid post ID: " + id);});

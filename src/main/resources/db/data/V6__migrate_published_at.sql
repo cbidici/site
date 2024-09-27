@@ -1,0 +1,1 @@
+UPDATE post SET published_at = created_at WHERE status = 'PUBLISHED';
