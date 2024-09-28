@@ -35,7 +35,8 @@ public class QuoteService {
       Tuple.tuple("Talk is cheap. Show me the code.","Linus Torvalds"),
       Tuple.tuple("Legacy code is code without tests.","Michael Feathers"),
       Tuple.tuple("One man’s crappy software is another man’s full time job.","Jessica Gaston"),
-      Tuple.tuple("Nothing makes a system more flexible than a suite of tests.","Uncle Bob")
+      Tuple.tuple("Nothing makes a system more flexible than a suite of tests.","Uncle Bob"),
+      Tuple.tuple("There is no better way to learn than to teach.", "Benjamin Whichcote")
   );
 
   public Tuple<String> getQuote() {
