@@ -11,5 +11,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
   List<Post> findByStatusOrderByPublishedAtDesc(Status status);
   List<Post> findByStatusOrderByPublishedAtDesc(Limit of, Status status);
-  List<Post> findByStatusOrderByReadCountDescCreatedAtDesc(Limit of, Status status);
+  List<Post> findByStatusOrderByReadCountDescPublishedAtDesc(Limit of, Status status);
 }

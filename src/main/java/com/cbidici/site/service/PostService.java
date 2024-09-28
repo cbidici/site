@@ -59,7 +59,7 @@ public class PostService {
   }
 
   public List<Post> getMostRead() {
-    return postRepository.findByStatusOrderByReadCountDescCreatedAtDesc(Limit.of(5), Status.PUBLISHED);
+    return postRepository.findByStatusOrderByReadCountDescPublishedAtDesc(Limit.of(5), Status.PUBLISHED);
   }
 
   public void incrementRead(Long id) {

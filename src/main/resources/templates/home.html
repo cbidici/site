@@ -21,7 +21,7 @@
           <span class="card-title">Recently Added</span>
           <hr>
           <ul class="px-4">
-            <li th:each="post : ${mostRecent}"><a class="link-dark link-underline link-underline-opacity-0 link-underline-opacity-100-hover" th:href="@{post.url}"><div class="mb-2 mt-2" th:text="${post.title}">Title</div></a></li>
+            <li th:each="post : ${mostRecent}"><a class="link-dark link-underline link-underline-opacity-0 link-underline-opacity-100-hover" th:href="@{${post.url}}"><div class="mb-2 mt-2" th:text="${post.title}">Title</div></a></li>
           </ul>
         </div>
       </div>
@@ -30,7 +30,7 @@
           <span class="card-title">Most Read</span>
           <hr>
           <ul class="px-4">
-            <li th:each="post : ${mostRead}"><a class="link-dark link-underline link-underline-opacity-0 link-underline-opacity-100-hover" th:href="@{post.url}"><div class="mb-2 mt-2" th:text="${post.title}">Title</div></a></li>
+            <li th:each="post : ${mostRead}"><a class="link-dark link-underline link-underline-opacity-0 link-underline-opacity-100-hover" th:href="@{${post.url}}"><div class="mb-2 mt-2" th:text="${post.title}">Title</div></a></li>
           </ul>
         </div>
       </div>
