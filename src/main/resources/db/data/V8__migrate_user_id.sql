@@ -1,0 +1,1 @@
+UPDATE post SET user_id = (SELECT id FROM user ORDER BY id ASC LIMIT 1);

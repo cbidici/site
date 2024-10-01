@@ -1,6 +1,6 @@
-package com.cbidici.site.repository;
+package com.cbidici.site.user.repository;
 
-import com.cbidici.site.entity.User;
+import com.cbidici.site.user.User;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 

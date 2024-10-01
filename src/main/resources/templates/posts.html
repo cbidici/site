@@ -18,9 +18,9 @@
             <small class="text-body-secondary" th:if="${post.publishedAt != null}" th:text="'Published At ' + ${post.publishedAt}"></small>
             <small class="text-body-secondary" sec:authorize="hasRole('ADMIN')" th:if="${post.publishedAt != null}"> - </small>
             <small class="text-body-secondary" sec:authorize="hasRole('ADMIN')" th:text="'Created At ' + ${post.createdAt}"></small>
-            <span class="float-end status-badge badge text-bg-primary" sec:authorize="hasRole('ADMIN')" th:if="${post.status.name().equals('CREATED')}" th:text="${post.status}">C</span>
-            <span class="float-end status-badge badge text-bg-success" sec:authorize="hasRole('ADMIN')" th:if="${post.status.name().equals('PUBLISHED')}" th:text="${post.status}">P</span>
-            <span class="float-end status-badge badge text-bg-secondary" sec:authorize="hasRole('ADMIN')" th:if="${post.status.name().equals('WITHDRAWN')}" th:text="${post.status}">P</span>
+            <span class="float-end status-badge badge text-bg-primary" sec:authorize="hasRole('ADMIN')" th:if="${post.status.equals('CREATED')}" th:text="${post.status}">C</span>
+            <span class="float-end status-badge badge text-bg-success" sec:authorize="hasRole('ADMIN')" th:if="${post.status.equals('PUBLISHED')}" th:text="${post.status}">P</span>
+            <span class="float-end status-badge badge text-bg-secondary" sec:authorize="hasRole('ADMIN')" th:if="${post.status.equals('WITHDRAWN')}" th:text="${post.status}">P</span>
           </p>
         </div>
       </a>

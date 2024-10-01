@@ -1,11 +1,11 @@
-package com.cbidici.site.service;
+package com.cbidici.site.shared;
 
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-public class MarkdownService {
+@Component
+public class MarkdownAdapter {
   private final Parser parser = Parser.builder().build();
   private final HtmlRenderer renderer = HtmlRenderer.builder().build();
 
