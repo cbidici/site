@@ -1,9 +1,15 @@
 package com.cbidici.site.controller;
 
-import com.cbidici.site.controller.data.PostCardResponse;
-import com.cbidici.site.service.PostService;
-import com.cbidici.site.service.QuoteService;
-import com.github.slugify.Slugify;
+import com.cbidici.site.controller.data.PostTitleResponse;
+import com.cbidici.site.post.Post;
+import com.cbidici.site.post.PostSearch;
+import com.cbidici.site.post.PostService;
+import com.cbidici.site.post.PostSort;
+import com.cbidici.site.post.Status;
+import com.cbidici.site.quote.QuoteService;
+import com.cbidici.site.shared.SlugService;
+import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,26 +21,32 @@ public class HomeController {
 
   private final QuoteService quoteService;
   private final PostService postService;
-  private final Slugify slugify;
+  private final SlugService slugService;
 
   @GetMapping("/")
   public String index(Model model) {
-    model.addAttribute("quote", quoteService.getQuote());
-    model.addAttribute("mostRecent", postService.getRecent().stream()
-        .map(post -> PostCardResponse.builder()
-            .id(post.getId())
-            .title(post.getTitle())
-            .publishedAt(post.getPublishedAt())
-            .url("/posts/"+slugify.slugify(post.getTitle())+"/"+post.getId())
-            .build()).toList());
-    model.addAttribute("mostRead", postService.getMostRead().stream()
-        .map(post -> PostCardResponse.builder()
-            .id(post.getId())
-            .title(post.getTitle())
-            .publishedAt(post.getPublishedAt())
-            .url("/posts/"+slugify.slugify(post.getTitle())+"/"+post.getId())
-            .build()).toList());
+    model.addAttribute("quote", quoteService.getRandom());
+    model.addAttribute("mostRecent", getRecentPosts().stream()
+        .map(this::map).toList());
+    model.addAttribute("mostRead", getMostReadPosts().stream()
+        .map(this::map).toList());
     return "home";
   }
 
+  private List<Post> getRecentPosts() {
+    return postService
+        .search(PostSearch.builder().offset(0).size(5).statuses(Set.of(Status.PUBLISHED)).sort(PostSort.PUBLISHED_DESC).build());
+  }
+
+  private List<Post> getMostReadPosts() {
+    return postService
+        .search(PostSearch.builder().offset(0).size(5).statuses(Set.of(Status.PUBLISHED)).sort(PostSort.READ_COUNT_DESC).build());
+  }
+
+  private PostTitleResponse map(Post post) {
+    return new PostTitleResponse(
+        post.getTitle(),
+        "/posts/"+slugService.getSlug(post.getTitle())+"/"+post.getId()
+    );
+  }
 }

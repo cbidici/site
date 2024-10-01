@@ -23,17 +23,6 @@
           <textarea rows="16" th:field="*{content}" id="content" class="form-control"></textarea>
         </div>
       </div>
-      <fieldset class="row mb-2">
-        <legend class="col-form-label col-sm-2 pt-0">Status</legend>
-        <div class="col-sm-10">
-          <div class="form-check" th:each="statusOpt : ${T(com.cbidici.site.entity.Status).values()}">
-            <input class="form-check-input" type="radio" th:field="*{status}" th:id="${statusOpt.name}" th:value="${statusOpt}" checked>
-            <label class="form-check-label" th:for="${statusOpt.name}" th:text="${statusOpt.name}">
-              Status Name
-            </label>
-          </div>
-        </div>
-      </fieldset>
       <a th:href="@{/posts/{id}(id=${post.id})}" role="button" class="btn btn-primary">Cancel</a>
       <button class="btn btn-primary" type="submit">Save</button>
     </form>

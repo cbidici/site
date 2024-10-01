@@ -9,8 +9,8 @@
     <div class="row">
       <div class="col-lg shadow-sm mb-3 p-3 bg-white m-2">
         <blockquote class="m-2 fs-5">
-          <p class="mb-4 lh-sm" th:text="${quote.getFirst()}"></p>
-          <footer class="blockquote-footer" th:text="${quote.getLast()}"></footer>
+          <p class="mb-4 lh-sm" th:text="${quote.quote()}"></p>
+          <footer class="blockquote-footer" th:text="${quote.owner()}"></footer>
         </blockquote>
       </div>
     </div>

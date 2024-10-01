@@ -1,14 +1,23 @@
 package com.cbidici.site.controller;
 
+import com.cbidici.site.controller.data.PostCardAdminResponse;
 import com.cbidici.site.controller.data.PostCardResponse;
-import com.cbidici.site.entity.Post;
-import com.cbidici.site.service.MarkdownService;
-import com.cbidici.site.service.PostService;
-import com.github.slugify.Slugify;
+import com.cbidici.site.controller.data.PostRequest;
+import com.cbidici.site.controller.data.PostResponse;
+import com.cbidici.site.controller.data.PostUpdateView;
+import com.cbidici.site.post.Post;
+import com.cbidici.site.post.PostSearch;
+import com.cbidici.site.post.PostSort;
+import com.cbidici.site.post.Status;
+import com.cbidici.site.shared.MarkdownAdapter;
+import com.cbidici.site.post.PostService;
+import com.cbidici.site.shared.SlugService;
+import com.cbidici.site.user.SpringUser;
 import jakarta.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,89 +30,104 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class BlogController {
 
   private final PostService postService;
-  private final MarkdownService markdownService;
-  private final Slugify slugify;
+  private final MarkdownAdapter markdownAdapter;
+  private final SlugService slugService;
 
   @GetMapping("/posts")
   public String posts(HttpServletRequest request, Model model) {
-    List<PostCardResponse> posts;
     if (request.isUserInRole("ROLE_ADMIN")) {
-      posts = postService.getAllPosts().stream()
-          .map(post -> PostCardResponse.builder()
-              .id(post.getId())
-              .title(post.getTitle())
-              .status(post.getStatus())
-              .createdAt(post.getCreatedAt())
-              .publishedAt(post.getPublishedAt())
-              .url("/posts/"+slugify.slugify(post.getTitle())+"/"+post.getId())
+      model.addAttribute("posts", postService.search(PostSearch.builder()
+              .sort(PostSort.CREATED_DESC)
               .build())
-          .toList();
+          .stream()
+          .map(post ->new PostCardAdminResponse(
+              post.getId(),
+              post.getTitle(),
+              post.getStatus().name(),
+              post.getCreatedAt(),
+              post.getPublishedAt(),
+              "/posts/"+slugService.getSlug(post.getTitle())+"/"+post.getId()
+          )).toList());
     } else {
-      posts = postService.getPublished().stream()
-          .map(post -> PostCardResponse.builder()
-              .id(post.getId())
-              .title(post.getTitle())
-              .status(post.getStatus())
-              .publishedAt(post.getPublishedAt())
-              .url("/posts/"+slugify.slugify(post.getTitle())+"/"+post.getId())
+      model.addAttribute("posts", postService.search(PostSearch.builder()
+              .statuses(Set.of(Status.PUBLISHED))
+              .sort(PostSort.PUBLISHED_DESC)
               .build())
-          .toList();
+          .stream()
+          .map(post -> new PostCardResponse(
+              post.getId(),
+              post.getTitle(),
+              post.getStatus().name(),
+              post.getPublishedAt(),
+              "/posts/"+slugService.getSlug(post.getTitle())+"/"+post.getId())
+          )
+          .toList());
     }
-    model.addAttribute("posts", posts);
     return "posts";
-  }
-
-  @GetMapping("/posts/{id}")
-  public String oldViewPost(@PathVariable("id") Long id) {
-    var post = postService.getPostById(id).orElseThrow(() -> new IllegalArgumentException("Invalid post id: " + id));
-    return "redirect:/posts/" + slugify.slugify(post.getTitle()) + "/" + id;
   }
 
   @GetMapping( "/posts/*/{id}")
   public String viewPost(@PathVariable("id") Long id, HttpServletRequest request, Model model) {
-    Post post = postService.getPostById(id).orElseThrow(() -> new IllegalArgumentException("Invalid post id: " + id));
+    var post = postService.get(id);
     if (!request.isUserInRole("ROLE_ADMIN")) {
-      postService.incrementRead(id);
+      postService.increaseReadCount(id);
     }
-    String htmlContent = markdownService.convertToHtml(post.getContent());
-    model.addAttribute("post", post);
-    model.addAttribute("content", htmlContent);
+    model.addAttribute("post", new PostResponse(post.getId(), post.getTitle(), markdownAdapter.convertToHtml(post.getContent()), post.getStatus().name()));
     return "post";
   }
 
   @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/posts/create")
   public String showNewPostForm(Model model) {
-    model.addAttribute("post", new Post());
+    model.addAttribute("post", new PostUpdateView(null, null, null));
     return "post-create";
   }
 
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping("/posts/create")
-  public String savePost(@ModelAttribute("post") Post post) {
-    postService.createPost(post);
+  public String createPost(UsernamePasswordAuthenticationToken token, @ModelAttribute("post") PostRequest postRequest) {
+    var springUser = (SpringUser) token.getPrincipal();
+    postService.create(springUser.getUser().getId(), postRequest.title(), postRequest.content());
     return "redirect:/";
   }
 
   @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/posts/{id}/update")
   public String showUpdateForm(@PathVariable("id") Long id, Model model) {
-    Post post = postService.getPostById(id).orElseThrow(() -> new IllegalArgumentException("Invalid post ID: " + id));
-    model.addAttribute("post", post);
+    Post post = postService.get(id);
+    model.addAttribute("post", new PostUpdateView(post.getId(), post.getTitle(), post.getContent()));
     return "post-update";
   }
 
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping("/posts/{id}")
-  public String updatePost(@PathVariable("id") Long id, @ModelAttribute("post") Post post) {
-    postService.updatePost(id, post);
-    return "redirect:/posts/"+id;
+  public String updatePost(@PathVariable("id") Long id, @ModelAttribute("post") PostRequest postRequest) {
+    postService.update(id, postRequest.title(), postRequest.content());
+    return "redirect:/posts/"+ slugService.getSlug(postRequest.title()) +"/"+id;
   }
 
   @PreAuthorize("hasRole('ADMIN')")
-  @GetMapping("/posts/delete/{id}")
+  @GetMapping("/posts/{id}/publish")
+  public String publishPost(@PathVariable("id") Long id) {
+    postService.publish(id);
+    var post = postService.get(id);
+    return "redirect:/posts/"+ slugService.getSlug(post.getTitle()) +"/"+id;
+  }
+
+  @PreAuthorize("hasRole('ADMIN')")
+  @GetMapping("/posts/{id}/withdraw")
+  public String withDrawPost(@PathVariable("id") Long id) {
+    postService.withdraw(id);
+    var post = postService.get(id);
+    return "redirect:/posts/"+ slugService.getSlug(post.getTitle()) +"/"+id;
+  }
+
+  @PreAuthorize("hasRole('ADMIN')")
+  @GetMapping("/posts/{id}/delete")
   public String deletePost(@PathVariable("id") Long id) {
-    postService.deletePost(id);
+    postService.delete(id);
     return "redirect:/posts";
   }
+
+
 }
