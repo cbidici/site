@@ -71,6 +71,16 @@
       <version>3.0.7</version>
     </dependency>
     <dependency>
+      <groupId>gg.jte</groupId>
+      <artifactId>jte</artifactId>
+      <version>3.1.12</version>
+    </dependency>
+    <dependency>
+      <groupId>gg.jte</groupId>
+      <artifactId>jte-spring-boot-starter-3</artifactId>
+      <version>3.1.12</version>
+    </dependency>
+    <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.34</version>
@@ -92,6 +102,27 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>gg.jte</groupId>
+        <artifactId>jte-maven-plugin</artifactId>
+        <version>3.1.12</version>
+        <executions>
+          <execution>
+            <id>jte-generate</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <sourceDirectory>${project.basedir}/src/main/jte</sourceDirectory>
+              <binaryStaticContent>true</binaryStaticContent>
+              <targetDirectory>${project.build.directory}/jte-classes</targetDirectory>
+              <targetResourceDirectory>${project.build.outputDirectory}</targetResourceDirectory>
+              <contentType>Html</contentType>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>

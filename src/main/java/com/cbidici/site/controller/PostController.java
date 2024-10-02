@@ -1,6 +1,5 @@
 package com.cbidici.site.controller;
 
-import com.cbidici.site.controller.data.PostCardAdminResponse;
 import com.cbidici.site.controller.data.PostCardResponse;
 import com.cbidici.site.controller.data.PostRequest;
 import com.cbidici.site.controller.data.PostResponse;
@@ -27,7 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequiredArgsConstructor
-public class BlogController {
+public class PostController {
 
   private final PostService postService;
   private final MarkdownAdapter markdownAdapter;
@@ -40,7 +39,7 @@ public class BlogController {
               .sort(PostSort.CREATED_DESC)
               .build())
           .stream()
-          .map(post ->new PostCardAdminResponse(
+          .map(post ->new PostCardResponse(
               post.getId(),
               post.getTitle(),
               post.getStatus().name(),
@@ -58,6 +57,7 @@ public class BlogController {
               post.getId(),
               post.getTitle(),
               post.getStatus().name(),
+              null,
               post.getPublishedAt(),
               "/posts/"+slugService.getSlug(post.getTitle())+"/"+post.getId())
           )
@@ -79,31 +79,34 @@ public class BlogController {
   @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/posts/create")
   public String showNewPostForm(Model model) {
-    model.addAttribute("post", new PostUpdateView(null, null, null));
     return "post-create";
   }
 
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping("/posts/create")
-  public String createPost(UsernamePasswordAuthenticationToken token, @ModelAttribute("post") PostRequest postRequest) {
+  public String createPost(UsernamePasswordAuthenticationToken token, @ModelAttribute PostRequest postRequest) {
     var springUser = (SpringUser) token.getPrincipal();
     postService.create(springUser.getUser().getId(), postRequest.title(), postRequest.content());
-    return "redirect:/";
+    return "redirect:/posts";
   }
 
   @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/posts/{id}/update")
   public String showUpdateForm(@PathVariable("id") Long id, Model model) {
     Post post = postService.get(id);
-    model.addAttribute("post", new PostUpdateView(post.getId(), post.getTitle(), post.getContent()));
+    model.addAttribute("post", new PostUpdateView(
+        post.getId(),
+        post.getTitle(),
+        post.getContent(),
+        "/posts/" + slugService.getSlug(post.getTitle())  + "/" + post.getId()));
     return "post-update";
   }
 
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping("/posts/{id}")
-  public String updatePost(@PathVariable("id") Long id, @ModelAttribute("post") PostRequest postRequest) {
+  public String updatePost(@PathVariable("id") Long id, @ModelAttribute PostRequest postRequest) {
     postService.update(id, postRequest.title(), postRequest.content());
-    return "redirect:/posts/"+ slugService.getSlug(postRequest.title()) +"/"+id;
+    return "redirect:/posts/" + slugService.getSlug(postRequest.title()) + "/"+id;
   }
 
   @PreAuthorize("hasRole('ADMIN')")
