@@ -4,10 +4,11 @@
 @param PostResponse post
 
 @template.base(
-  page = page,
-  title = post.title(),
-  headElements = null,
-  content = @`
+page = page,
+headElements = @`
+  <title>${post.title()}</title>
+`,
+content = @`
   <div>
     <section class="mb-3">
       <a class="link-primary" href="/posts">Back to Posts</a>
@@ -31,5 +32,4 @@
       <script>hljs.highlightAll();</script>
     </section>
   </div>
-  `
-)
+`)

@@ -15,15 +15,12 @@
   <description>Personal Web Site</description>
   <properties>
     <java.version>21</java.version>
+    <gg.jte.version>3.1.12</gg.jte.version>
   </properties>
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-thymeleaf</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -37,10 +34,6 @@
       <groupId>org.springframework.modulith</groupId>
       <artifactId>spring-modulith-starter-core</artifactId>
       <version>1.2.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.thymeleaf.extras</groupId>
-      <artifactId>thymeleaf-extras-springsecurity6</artifactId>
     </dependency>
     <dependency>
       <groupId>org.hibernate.orm</groupId>
@@ -61,11 +54,6 @@
       <version>3.46.1.0</version>
     </dependency>
     <dependency>
-      <groupId>nz.net.ultraq.thymeleaf</groupId>
-      <artifactId>thymeleaf-layout-dialect</artifactId>
-      <version>3.3.0</version>
-    </dependency>
-    <dependency>
       <groupId>com.github.slugify</groupId>
       <artifactId>slugify</artifactId>
       <version>3.0.7</version>
@@ -73,12 +61,12 @@
     <dependency>
       <groupId>gg.jte</groupId>
       <artifactId>jte</artifactId>
-      <version>3.1.12</version>
+      <version>${gg.jte.version}</version>
     </dependency>
     <dependency>
       <groupId>gg.jte</groupId>
       <artifactId>jte-spring-boot-starter-3</artifactId>
-      <version>3.1.12</version>
+      <version>${gg.jte.version}</version>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -105,7 +93,7 @@
       <plugin>
         <groupId>gg.jte</groupId>
         <artifactId>jte-maven-plugin</artifactId>
-        <version>3.1.12</version>
+        <version>${gg.jte.version}</version>
         <executions>
           <execution>
             <id>jte-generate</id>
@@ -116,7 +104,6 @@
             <configuration>
               <sourceDirectory>${project.basedir}/src/main/jte</sourceDirectory>
               <binaryStaticContent>true</binaryStaticContent>
-              <targetDirectory>${project.build.directory}/jte-classes</targetDirectory>
               <targetResourceDirectory>${project.build.outputDirectory}</targetResourceDirectory>
               <contentType>Html</contentType>
             </configuration>

@@ -5,8 +5,9 @@
 
 @template.base(
 page = page,
-title = "Update Post",
-headElements = null,
+headElements = @`
+  <title>Update Post</title>
+`,
 content = @`
   <div>
     <section class="mb-3">

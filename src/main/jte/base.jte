@@ -3,7 +3,6 @@
 
 @param Page page
 @param Content headElements
-@param String title
 @param Content content
 
 <!DOCTYPE html>
@@ -22,12 +21,13 @@
   <meta name="keywords" content="Software Engineering Blog, Blog, Portfolio">
   <meta name="author" content="Coşkun Bıdıcı">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${title == null ? "Coşkun Bıdıcı's Sandbox" : title}</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/base.css" rel="stylesheet">
   <link rel="icon" href="/images/favicon.svg">
   @if(headElements!= null)
     ${headElements}
+  @else
+    <title>Coşkun Bıdıcı's Sandbox</title>
   @endif
 </head>
 <body>

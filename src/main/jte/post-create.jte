@@ -3,8 +3,9 @@
 
 @template.base(
 page = page,
-title = "Create Post",
-headElements = null,
+headElements = @`
+  <title>Create Post</title>
+`,
 content = @`
   <div>
     <section class="mb-3">

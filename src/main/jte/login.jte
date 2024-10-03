@@ -3,10 +3,12 @@
 @param String error
 
 @template.base(
-  page = page,
-  title = "Coşkun Bıdıcı's Sandbox - Login",
-  headElements = @`<link href="/css/profile.css" rel="stylesheet">`,
-  content = @`
+page = page,
+headElements = @`
+  <link href="/css/profile.css" rel="stylesheet">
+  <title>Coşkun Bıdıcı's Sandbox - Login</title>
+`,
+content = @`
   <div class="d-flex justify-content-center">
     <div class="mt-5" style="max-width:480px">
       <form action="/login" method="post">
