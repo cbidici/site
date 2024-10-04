@@ -19,7 +19,7 @@ content = @`
           @if(post.status().equals("CREATED") || post.status().equals("WITHDRAWN"))
             | <a class="link-primary" href="/posts/${post.id()}/publish">Publish</a>
           @elseif(post.status().equals("PUBLISHED"))
-            | <a class="link-primary" href="/posts/${post.id()}/withdraw">Withdraw</a> |
+            | <a class="link-primary" href="/posts/${post.id()}/withdraw">Withdraw</a>
           @endif
           | <a class="link-primary" href="/posts/${post.id()}/delete" onclick="return confirm('Are you sure you want to delete this post?')">Delete</a>
         </span>
