@@ -8,8 +8,8 @@ import com.cbidici.site.post.Post;
 import com.cbidici.site.post.PostSearch;
 import com.cbidici.site.post.PostSort;
 import com.cbidici.site.post.Status;
-import com.cbidici.site.shared.MarkdownAdapter;
 import com.cbidici.site.post.PostService;
+import com.cbidici.site.shared.MarkdownProcessor;
 import com.cbidici.site.shared.SlugService;
 import com.cbidici.site.user.SpringUser;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class PostController {
 
   private final PostService postService;
-  private final MarkdownAdapter markdownAdapter;
+  private final MarkdownProcessor markdownProcessor;
   private final SlugService slugService;
 
   @GetMapping("/posts")
@@ -72,7 +72,7 @@ public class PostController {
     if (!request.isUserInRole("ROLE_ADMIN")) {
       postService.increaseReadCount(id);
     }
-    model.addAttribute("post", new PostResponse(post.getId(), post.getTitle(), markdownAdapter.convertToHtml(post.getContent()), post.getStatus().name()));
+    model.addAttribute("post", new PostResponse(post.getId(), post.getTitle(), markdownProcessor.getHtml(post.getContent()), post.getStatus().name()));
     return "post";
   }
 
