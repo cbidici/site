@@ -6,6 +6,7 @@ public record PostCardResponse(
     Long id,
     String title,
     String status,
+    LocalDateTime createdAt,
     LocalDateTime publishedAt,
     String url) {
 }

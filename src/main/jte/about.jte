@@ -1,21 +1,24 @@
-<!DOCTYPE html>
-<html layout:decorate="~{base}">
-<head>
-  <title>About Coşkun Bıdıcı</title>
+@import com.cbidici.site.controller.data.Page
+@param Page page
+
+@template.base(
+page = page,
+headElements = @`
   <link href="/css/profile.css" rel="stylesheet">
-</head>
-<body>
-<div layout:fragment="content">
-  <section class="mb-3">
-    <div class="shadow-sm mb-3 p-3 bg-white">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="profile-pic">
-              <img src="/images/coskun_bidici_profile.jpg" alt="Coşkun Bıdıcı">
+  <title>About Coşkun Bıdıcı</title>
+`,
+content = @`
+  <div>
+    <section class="mb-3">
+      <div class="shadow-sm mb-3 p-3 bg-white">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="profile-pic">
+                <img src="/images/coskun_bidici_profile.jpg" alt="Coşkun Bıdıcı">
+              </div>
             </div>
-          </div>
-          <div class="col-lg-8 vertical-align">
+            <div class="col-lg-8 vertical-align">
               <ul>
                 <li>15+ years experience on Software Engineering</li>
                 <li>4+ years experience on engineering management</li>
@@ -24,11 +27,10 @@
                 <li>Worked on domains such as IOT, E-Learning, E-Commerce, OMS, Telecom, BI, CRM, Marketplace</li>
                 <li>Motivated by being productive</li>
               </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-</div>
-</body>
-</html>
+    </section>
+  </div>
+`)

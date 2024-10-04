@@ -10,7 +10,7 @@ public class QuoteService {
       new Quote("May the source be with you.","Obi-Wan Kenobi"),
       new Quote("'It depends' is almost always the right answer in any big questions.", "Linus Torvalds"),
       new Quote("With great power comes great responsibility.", "Uncle Ben"),
-      new Quote("It works on my machine.", "Any developer"),
+      new Quote("It works on my machine.", "Anonymous"),
       new Quote("Before software can be reusable it first has to be usable.", "Ralph Johnson"),
       new Quote("If it doesn’t work, it doesn’t matter how fast it doesn’t work.", "Mich Ravera"),
       new Quote("There’s nothing more permanent than a temporary hack.", "Kyle Simpson"),
