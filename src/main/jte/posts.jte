@@ -10,6 +10,7 @@ page = page,
 headElements = @`
   <link href="/css/posts.css" rel="stylesheet">
   <title>Coşkun Bıdıcı's Sandbox - Posts</title>
+  <meta name="description" content="Engineering Blog Posts Authored by Coşkun Bıdıcı">
 `,
 content = @`
   <div>

@@ -72,7 +72,7 @@ public class PostController {
     if (!request.isUserInRole("ROLE_ADMIN")) {
       postService.increaseReadCount(id);
     }
-    model.addAttribute("post", new PostResponse(post.getId(), post.getTitle(), markdownProcessor.getHtml(post.getContent()), post.getStatus().name()));
+    model.addAttribute("post", new PostResponse(post.getId(), post.getTitle(), post.getDescription(), markdownProcessor.getHtml(post.getContent()), post.getStatus().name()));
     return "post";
   }
 
@@ -86,7 +86,7 @@ public class PostController {
   @PostMapping("/posts/create")
   public String createPost(UsernamePasswordAuthenticationToken token, @ModelAttribute PostRequest postRequest) {
     var springUser = (SpringUser) token.getPrincipal();
-    postService.create(springUser.getUser().getId(), postRequest.title(), postRequest.content());
+    postService.create(springUser.getUser().getId(), postRequest.title(), postRequest.description(), postRequest.content());
     return "redirect:/posts";
   }
 
@@ -97,6 +97,7 @@ public class PostController {
     model.addAttribute("post", new PostUpdateView(
         post.getId(),
         post.getTitle(),
+        post.getDescription(),
         post.getContent(),
         "/posts/" + slugService.getSlug(post.getTitle())  + "/" + post.getId()));
     return "post-update";
@@ -105,7 +106,7 @@ public class PostController {
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping("/posts/{id}")
   public String updatePost(@PathVariable("id") Long id, @ModelAttribute PostRequest postRequest) {
-    postService.update(id, postRequest.title(), postRequest.content());
+    postService.update(id, postRequest.title(), postRequest.description(), postRequest.content());
     return "redirect:/posts/" + slugService.getSlug(postRequest.title()) + "/"+id;
   }
 

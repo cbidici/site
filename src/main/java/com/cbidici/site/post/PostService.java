@@ -14,13 +14,13 @@ public class PostService {
 
   private final PostRepository repository;
 
-  public void create(Long userId, String title, String content) {
-    repository.save(new Post(userId, title, content));
+  public void create(Long userId, String title, String description, String content) {
+    repository.save(new Post(userId, title, description, content));
   }
 
-  public void update(Long id, String title, String content) {
+  public void update(Long id, String title, String description, String content) {
     var post = repository.findById(id).orElseThrow(() -> new PostNotFoundException(id));
-    post.update(title, content);
+    post.update(title, description, content);
     repository.save(post);
   }
 

@@ -21,6 +21,7 @@ public class Post {
   @Column(name = "user_id")
   private Long userId;
   private String title;
+  private String description;
   private String content;
   @Enumerated(EnumType.STRING)
   private Status status;
@@ -31,16 +32,18 @@ public class Post {
   @Column(name = "read_count")
   private int readCount;
 
-  protected Post(Long userId, String title, String content) {
+  protected Post(Long userId, String title, String description, String content) {
     this.userId = userId;
     this.title = title;
+    this.description = description;
     this.content = content;
     this.status = Status.CREATED;
     this.createdAt = LocalDateTime.now();
   }
 
-  protected void update(String title, String content) {
+  protected void update(String title, String description, String content) {
     this.title = title;
+    this.description = description;
     this.content = content;
   }
 

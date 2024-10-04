@@ -24,6 +24,12 @@ content = @`
           </div>
         </div>
         <div class="row mb-2">
+          <label for="description" class="col-sm-2 col-form-label">Description:</label>
+          <div class="col-sm-10">
+            <textarea rows="2" name="description" id="description" class="form-control">${post.description()}</textarea>
+          </div>
+        </div>
+        <div class="row mb-2">
           <label for="content" class="col-sm-2 col-form-label">Content:</label>
           <div class="col-sm-10">
             <textarea rows="16" name="content" id="content" class="form-control">${post.content()}</textarea>

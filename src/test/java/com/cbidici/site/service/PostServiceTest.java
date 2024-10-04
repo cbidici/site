@@ -25,12 +25,12 @@ public class PostServiceTest {
   @Test
   void testSave() {
     var postCaptor = ArgumentCaptor.forClass(Post.class);
-    service.create(10L, "Title", "Content");
+    service.create(10L, "Title", "Description", "Content");
     verify(repository).save(postCaptor.capture());
     assertThat(postCaptor.getValue().getUserId()).isEqualTo(10L);
     assertThat(postCaptor.getValue().getTitle()).isEqualTo("Title");
+    assertThat(postCaptor.getValue().getDescription()).isEqualTo("Description");
     assertThat(postCaptor.getValue().getContent()).isEqualTo("Content");
   }
-
 
 }

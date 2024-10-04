@@ -8,6 +8,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  @if(headElements!= null)
+    ${headElements}
+  @else
+    <title>Coşkun Bıdıcı's Sandbox</title>
+    <meta name="description" content="Self developed, hosted and authored software engineering blog by Coşkun Bıdıcı">
+  @endif
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PLPHEQBGX"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -17,18 +24,12 @@
     gtag('config', 'G-8PLPHEQBGX');
   </script>
   <meta charset="utf-8">
-  <meta name="description" content="Self developed, hosted and authored software engineering blog by Coşkun Bıdıcı">
   <meta name="keywords" content="Software Engineering Blog, Blog, Portfolio">
   <meta name="author" content="Coşkun Bıdıcı">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/base.css" rel="stylesheet">
   <link rel="icon" href="/images/favicon.svg">
-  @if(headElements!= null)
-    ${headElements}
-  @else
-    <title>Coşkun Bıdıcı's Sandbox</title>
-  @endif
 </head>
 <body>
 <div>

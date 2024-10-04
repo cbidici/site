@@ -7,6 +7,7 @@
 page = page,
 headElements = @`
   <title>${post.title()}</title>
+  <meta name="description" content="${post.description()}">
 `,
 content = @`
   <div>
