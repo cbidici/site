@@ -1,4 +1,4 @@
-package com.cbidici.site.config;
+package com.cbidici.site.view.config;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

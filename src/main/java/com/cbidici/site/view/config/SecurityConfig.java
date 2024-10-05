@@ -1,4 +1,4 @@
-package com.cbidici.site.config;
+package com.cbidici.site.view.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
