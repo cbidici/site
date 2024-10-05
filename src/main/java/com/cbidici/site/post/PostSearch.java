@@ -7,7 +7,9 @@ import lombok.Getter;
 @Builder
 @Getter
 public class PostSearch {
-  private Set<Status> statuses;
+  private Long id;
+  @Builder.Default
+  private Set<Status> statuses = Set.of(Status.values());
   @Builder.Default
   private PostSort sort = PostSort.PUBLISHED_DESC;
   @Builder.Default

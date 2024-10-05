@@ -1,4 +1,4 @@
-@import com.cbidici.site.controller.data.Page
+@import com.cbidici.site.view.data.Page
 @param Page page
 @param String error
 
@@ -12,7 +12,7 @@ content = @`
   <div class="d-flex justify-content-center">
     <div class="mt-5" style="max-width:480px">
       <form action="/login" method="post">
-        <input type="hidden" name="_csrf" value="${page.crsf().getToken()}">
+        <input type="hidden" name="_csrf" value="${page.getCsrfToken()}">
         <div class="row mb-2">
           <div class="col-sm-12">
             <input type="text" class="form-control" id="username" name="username" placeholder="Username">

@@ -1,5 +1,5 @@
 @import gg.jte.Content
-@import com.cbidici.site.controller.data.Page
+@import com.cbidici.site.view.data.Page
 
 @param Page page
 @param Content headElements
@@ -41,18 +41,18 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link ${page.requestURI().equals("/") ? "active text-decoration-underline" : ""}" href="/">Home</a></li>
-          <li class="nav-item"><a class="nav-link ${page.requestURI().equals("/posts") ? "active text-decoration-underline" : ""}" href="/posts">Posts</a></li>
-          <li class="nav-item"><a class="nav-link ${page.requestURI().equals("/about") ? "active text-decoration-underline" : ""}" href="/about">About</a></li>
+          <li class="nav-item"><a class="nav-link ${page.isCurrentUri("/") ? "active text-decoration-underline" : ""}" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link ${page.isCurrentUri("/posts") ? "active text-decoration-underline" : ""}" href="/posts">Posts</a></li>
+          <li class="nav-item"><a class="nav-link ${page.isCurrentUri("/about") ? "active text-decoration-underline" : ""}" href="/about">About</a></li>
         </ul>
         <div class="d-flex">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              @if(!page.authenticated())
-                <a class="nav-link @if(page.requestURI().equals("/login")) active text-decoration-underline @endif" href="/login">Login</a>
+              @if(!page.isAuthenticated())
+                <a class="nav-link @if(page.isCurrentUri("/login")) active text-decoration-underline @endif" href="/login">Login</a>
               @else
                 <form action="/logout" method="post">
-                  <input type="hidden" name="_csrf" value="${page.crsf().getToken()}">
+                  <input type="hidden" name="_csrf" value="${page.getCsrfToken()}">
                   <button type="submit" class="nav-link">Logout</button>
                 </form>
               @endif

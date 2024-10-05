@@ -1,4 +1,4 @@
-@import com.cbidici.site.controller.data.Page
+@import com.cbidici.site.view.data.Page
 @param Page page
 
 @template.base(

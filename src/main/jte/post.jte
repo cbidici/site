@@ -1,5 +1,5 @@
-@import com.cbidici.site.controller.data.Page
-@import com.cbidici.site.controller.data.PostResponse
+@import com.cbidici.site.view.data.Page
+@import com.cbidici.site.view.data.PostResponse
 @param Page page
 @param PostResponse post
 
@@ -13,7 +13,7 @@ content = @`
   <div>
     <section class="mb-3">
       <a class="link-primary" href="/posts">Back to Posts</a>
-      @if(page.authorities().contains("ROLE_ADMIN"))
+      @if(page.hasRole("ADMIN"))
         <span>
           | <a class="link-primary" href="/posts/${post.id()}/update">Edit</a>
           @if(post.status().equals("CREATED") || post.status().equals("WITHDRAWN"))

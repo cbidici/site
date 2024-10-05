@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.Assert;
 
 @Entity
 @Getter
@@ -48,13 +49,18 @@ public class Post {
   }
 
   protected void publish() {
-    assert(this.status == Status.CREATED || this.status == Status.WITHDRAWN);
+    Assert.isTrue(
+        this.status == Status.CREATED || this.status == Status.WITHDRAWN,
+        "Post is not eligible to be published.");
     this.status = Status.PUBLISHED;
     this.publishedAt = LocalDateTime.now();
   }
 
   protected void withdraw() {
-    assert(this.status == Status.PUBLISHED);
+    Assert.isTrue(
+        this.status == Status.PUBLISHED,
+        "Post is not eligible to be withdrawn."
+    );
     this.status = Status.WITHDRAWN;
   }
 

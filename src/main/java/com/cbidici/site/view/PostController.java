@@ -1,19 +1,17 @@
-package com.cbidici.site.controller;
+package com.cbidici.site.view;
 
-import com.cbidici.site.controller.data.PostCardResponse;
-import com.cbidici.site.controller.data.PostRequest;
-import com.cbidici.site.controller.data.PostResponse;
-import com.cbidici.site.controller.data.PostUpdateView;
+import com.cbidici.site.view.data.PostCardResponse;
+import com.cbidici.site.view.data.PostRequest;
+import com.cbidici.site.view.data.PostResponse;
+import com.cbidici.site.view.data.PostUpdateView;
 import com.cbidici.site.post.Post;
 import com.cbidici.site.post.PostSearch;
 import com.cbidici.site.post.PostSort;
-import com.cbidici.site.post.Status;
 import com.cbidici.site.post.PostService;
 import com.cbidici.site.shared.MarkdownProcessor;
 import com.cbidici.site.shared.SlugService;
 import com.cbidici.site.user.SpringUser;
 import jakarta.servlet.http.HttpServletRequest;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,35 +32,18 @@ public class PostController {
 
   @GetMapping("/posts")
   public String posts(HttpServletRequest request, Model model) {
-    if (request.isUserInRole("ROLE_ADMIN")) {
-      model.addAttribute("posts", postService.search(PostSearch.builder()
-              .sort(PostSort.CREATED_DESC)
-              .build())
-          .stream()
-          .map(post ->new PostCardResponse(
-              post.getId(),
-              post.getTitle(),
-              post.getStatus().name(),
-              post.getCreatedAt(),
-              post.getPublishedAt(),
-              "/posts/"+slugService.getSlug(post.getTitle())+"/"+post.getId()
-          )).toList());
-    } else {
-      model.addAttribute("posts", postService.search(PostSearch.builder()
-              .statuses(Set.of(Status.PUBLISHED))
-              .sort(PostSort.PUBLISHED_DESC)
-              .build())
-          .stream()
-          .map(post -> new PostCardResponse(
-              post.getId(),
-              post.getTitle(),
-              post.getStatus().name(),
-              null,
-              post.getPublishedAt(),
-              "/posts/"+slugService.getSlug(post.getTitle())+"/"+post.getId())
-          )
-          .toList());
-    }
+    model.addAttribute("posts", postService.search(PostSearch.builder()
+            .sort(request.isUserInRole("ROLE_ADMIN") ? PostSort.CREATED_DESC : PostSort.PUBLISHED_DESC)
+            .build())
+        .stream()
+        .map(post ->new PostCardResponse(
+            post.getId(),
+            post.getTitle(),
+            post.getStatus().name(),
+            request.isUserInRole("ROLE_ADMIN") ? post.getCreatedAt() : null,
+            post.getPublishedAt(),
+            "/posts/"+slugService.getSlug(post.getTitle())+"/"+post.getId()
+        )).toList());
     return "posts";
   }
 

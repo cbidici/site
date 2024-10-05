@@ -6,6 +6,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,10 +15,12 @@ public class PostService {
 
   private final PostRepository repository;
 
+  @PreAuthorize("hasRole('ADMIN')")
   public void create(Long userId, String title, String description, String content) {
     repository.save(new Post(userId, title, description, content));
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   public void update(Long id, String title, String description, String content) {
     var post = repository.findById(id).orElseThrow(() -> new PostNotFoundException(id));
     post.update(title, description, content);
@@ -25,30 +28,35 @@ public class PostService {
   }
 
   public Post get(Long id) {
-    return repository.findById(id).orElseThrow(() -> new PostNotFoundException(id));
+    return search(PostSearch.builder().id(id).build()).stream()
+        .findFirst()
+        .orElseThrow(() -> new PostNotFoundException(id));
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   public void publish(Long id) {
     var post = get(id);
     post.publish();
     repository.save(post);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   public void withdraw(Long id) {
     var post = get(id);
     post.withdraw();
     repository.save(post);
   }
 
-  public void increaseReadCount(Long id) {
-    var post = get(id);
-    post.incReadCount();
-    repository.save(post);
-  }
-
+  @PreAuthorize("hasRole('ADMIN')")
   public void delete(Long id) {
     var post = get(id);
     post.delete();
+    repository.save(post);
+  }
+
+  public void increaseReadCount(Long id) {
+    var post = get(id);
+    post.incReadCount();
     repository.save(post);
   }
 

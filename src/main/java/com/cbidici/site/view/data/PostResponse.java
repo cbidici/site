@@ -1,4 +1,4 @@
-package com.cbidici.site.controller.data;
+package com.cbidici.site.view.data;
 
 public record PostResponse (
     Long id,

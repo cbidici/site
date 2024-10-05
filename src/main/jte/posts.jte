@@ -1,5 +1,5 @@
-@import com.cbidici.site.controller.data.Page
-@import com.cbidici.site.controller.data.PostCardResponse
+@import com.cbidici.site.view.data.Page
+@import com.cbidici.site.view.data.PostCardResponse
 @import java.util.List
 
 @param Page page
@@ -14,7 +14,7 @@ headElements = @`
 `,
 content = @`
   <div>
-    @if(page.authorities().contains("ROLE_ADMIN"))
+    @if(page.hasRole("ADMIN"))
       <section class="mb-3">
         <a class="link-primary" href="/posts/create">Create New Post</a>
       </section>
@@ -28,14 +28,14 @@ content = @`
               <p class="card-text">
                 @if(post.publishedAt()!=null)
                   <small class="text-body-secondary">Published At ${post.publishedAt().toString()}</small>
-                  @if(page.authorities().contains("ROLE_ADMIN"))
+                  @if(page.hasRole("ADMIN"))
                     <small class="text-body-secondary"> - </small>
                   @endif
                 @endif
-                @if(page.authorities().contains("ROLE_ADMIN"))
+                @if(page.hasRole("ADMIN"))
                   <small class="text-body-secondary">Created At ${post.createdAt().toString()}</small>
                 @endif
-                @if(page.authorities().contains("ROLE_ADMIN"))
+                @if(page.hasRole("ADMIN"))
                   !{var pillClass = post.status().equals("CREATED") ? "text-bg-primary" : post.status().equals("PUBLISHED") ? "text-bg-success" : post.status().equals("WITHDRAWN") ? "text-bg-secondary" : "";}
                   <span class="float-end status-badge badge ${pillClass}">${post.status()}</span>
                 @endif

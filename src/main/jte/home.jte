@@ -1,5 +1,5 @@
-@import com.cbidici.site.controller.data.Page
-@import com.cbidici.site.controller.data.PostTitleResponse
+@import com.cbidici.site.view.data.Page
+@import com.cbidici.site.view.data.PostTitleResponse
 @import com.cbidici.site.quote.Quote
 @import java.util.List
 @param Page page

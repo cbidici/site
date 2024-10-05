@@ -1,4 +1,4 @@
-@import com.cbidici.site.controller.data.Page
+@import com.cbidici.site.view.data.Page
 @param Page page
 
 @template.base(
@@ -14,7 +14,7 @@ content = @`
     <section class="mb-3">
       <h2>Create New Post</h2>
       <form action="/posts/create" method="post">
-        <input type="hidden" name="_csrf" value="${page.crsf().getToken()}">
+        <input type="hidden" name="_csrf" value="${page.getCsrfToken()}">
         <div class="row mb-2">
           <label for="title" class="col-sm-2 col-form-label">Title:</label>
           <div class="col-sm-10">

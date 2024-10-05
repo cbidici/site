@@ -1,4 +1,4 @@
-package com.cbidici.site.controller;
+package com.cbidici.site.view;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

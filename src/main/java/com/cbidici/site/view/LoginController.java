@@ -1,4 +1,4 @@
-package com.cbidici.site.controller;
+package com.cbidici.site.view;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Optional;

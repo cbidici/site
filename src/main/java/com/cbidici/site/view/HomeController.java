@@ -1,6 +1,6 @@
-package com.cbidici.site.controller;
+package com.cbidici.site.view;
 
-import com.cbidici.site.controller.data.PostTitleResponse;
+import com.cbidici.site.view.data.PostTitleResponse;
 import com.cbidici.site.post.Post;
 import com.cbidici.site.post.PostSearch;
 import com.cbidici.site.post.PostService;
