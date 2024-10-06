@@ -39,6 +39,7 @@ public class PostController {
         .map(post ->new PostCardResponse(
             post.getId(),
             post.getTitle(),
+            post.getDescription(),
             post.getStatus().name(),
             request.isUserInRole("ROLE_ADMIN") ? post.getCreatedAt() : null,
             post.getPublishedAt(),

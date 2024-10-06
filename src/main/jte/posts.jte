@@ -24,7 +24,11 @@ content = @`
         <article class="shadow-sm mb-3 p-3 bg-white">
           <a class="card-title text-decoration-none" href="${post.url()}">
             <div class="card-body">
-              <span class="card-title">${post.title()}</span>
+              <h6 class="card-title">${post.title()}</h6>
+              @if(post.description() != null)
+                <p></p>
+                <p class="card-text">${post.description()}</p>
+              @endif
               <p class="card-text">
                 @if(post.publishedAt()!=null)
                   <small class="text-body-secondary">Published At ${post.publishedAt().toString()}</small>
