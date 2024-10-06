@@ -28,7 +28,7 @@ public class PostSpecification {
           .getAuthorities()
           .stream()
           .map(GrantedAuthority::getAuthority)
-          .map(ROLE_STATUS_PERMISSION::get)
+          .map(authority -> ROLE_STATUS_PERMISSION.getOrDefault(authority, ROLE_STATUS_PERMISSION.get("ROLE_ANONYMOUS")))
           .flatMap(Collection::stream).toList()
   );
 

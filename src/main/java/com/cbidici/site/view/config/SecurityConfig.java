@@ -1,6 +1,6 @@
 package com.cbidici.site.view.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -13,16 +13,20 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-  @Autowired
-  private DelegatedAuthenticationEntryPoint delegatedAuthenticationEntryPoint;
+  private final DelegatedAuthenticationEntryPoint authenticationEntryPoint;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
         .authorizeHttpRequests(
-            auth -> auth.anyRequest().permitAll()
+            auth -> auth
+                .requestMatchers("/posts/create", "/posts/*/update", "/post/*/publish",
+                    "/posts/*/withdraw", "/posts/*/delete")
+                .authenticated()
+                .anyRequest().permitAll()
         )
         .formLogin(login -> login
             .defaultSuccessUrl("/")
@@ -30,7 +34,7 @@ public class SecurityConfig {
             .loginPage("/login")
         )
         .logout(login -> login.logoutSuccessUrl("/"))
-        .exceptionHandling(eh -> eh.authenticationEntryPoint(delegatedAuthenticationEntryPoint));
+        .exceptionHandling(eh -> eh.authenticationEntryPoint(authenticationEntryPoint));
     return http.build();
   }
 

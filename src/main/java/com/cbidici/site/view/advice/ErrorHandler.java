@@ -2,14 +2,17 @@ package com.cbidici.site.view.advice;
 
 import com.cbidici.site.post.PostNotFoundException;
 import com.cbidici.site.view.data.ErrorDetailResponse;
+import java.nio.file.AccessDeniedException;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
@@ -19,26 +22,38 @@ public class ErrorHandler {
 
   private final static String ERROR_VIEW = "error";
 
-  @ExceptionHandler({ AuthenticationException.class })
-  @ResponseStatus(HttpStatus.FORBIDDEN)
+  @ExceptionHandler({MethodArgumentTypeMismatchException.class})
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ModelAndView handleBadRequest(Exception e) {
+    return new ModelAndView(
+        ERROR_VIEW,
+        Map.of(
+            "errorDetail",
+            new ErrorDetailResponse(HttpStatus.BAD_REQUEST, "Looks like something went wrong.")
+        )
+    );
+  }
+
+  @ExceptionHandler({ AccessDeniedException.class, AuthenticationException.class, InsufficientAuthenticationException.class })
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
   public ModelAndView handleAuthenticationException(Exception ex) {
     return new ModelAndView(
         ERROR_VIEW,
         Map.of(
             "errorDetail",
-            new ErrorDetailResponse(HttpStatus.FORBIDDEN, "Ups! Looks like your are lost.")
+            new ErrorDetailResponse(HttpStatus.UNAUTHORIZED, "Ups! Looks like you are lost.")
         )
     );
   }
 
   @ExceptionHandler({AuthorizationDeniedException.class})
-  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  @ResponseStatus(HttpStatus.FORBIDDEN)
   public ModelAndView handleAuthorizationException(Exception ex) {
     return new ModelAndView(
         ERROR_VIEW,
         Map.of(
             "errorDetail",
-            new ErrorDetailResponse(HttpStatus.UNAUTHORIZED, "Ups! Looks like your are lost.")
+            new ErrorDetailResponse(HttpStatus.FORBIDDEN, "Ups! Looks like you are lost.")
         )
     );
   }

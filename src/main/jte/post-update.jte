@@ -15,7 +15,7 @@ content = @`
     </section>
     <section class="mb-3">
       <h2>Update Post</h2>
-      <form action="/posts/${post.id()}" method="post">
+      <form action="/posts/${post.id()}/update" method="post">
         <input type="hidden" name="_csrf" value="${page.getCsrfToken()}">
         <div class="row mb-2">
           <label for="title" class="col-sm-2 col-form-label">Title:</label>

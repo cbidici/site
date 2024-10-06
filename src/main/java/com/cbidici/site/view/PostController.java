@@ -85,7 +85,7 @@ public class PostController {
   }
 
   @PreAuthorize("hasRole('ADMIN')")
-  @PostMapping("/posts/{id}")
+  @PostMapping("/posts/{id}/update")
   public String updatePost(@PathVariable("id") Long id, @ModelAttribute PostRequest postRequest) {
     postService.update(id, postRequest.title(), postRequest.description(), postRequest.content());
     return "redirect:/posts/" + slugService.getSlug(postRequest.title()) + "/"+id;
