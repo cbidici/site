@@ -6,6 +6,7 @@
 @template.base(
 page = page,
 headElements = @`
+  <link href="/css/post.css" rel="stylesheet">
   <title>${post.title()}</title>
   <meta name="description" content="${post.description()}">
 `,
