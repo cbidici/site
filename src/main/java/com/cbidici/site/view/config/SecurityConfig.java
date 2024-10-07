@@ -24,7 +24,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(
             auth -> auth
                 .requestMatchers("/posts/create", "/posts/*/update", "/post/*/publish",
-                    "/posts/*/withdraw", "/posts/*/delete", "/storage")
+                    "/posts/*/withdraw", "/posts/*/delete", "/storage", "/storage/*/delete")
                 .authenticated()
                 .anyRequest().permitAll()
         )

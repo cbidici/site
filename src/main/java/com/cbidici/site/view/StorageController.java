@@ -75,4 +75,11 @@ public class StorageController {
     return "redirect:/storage";
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
+  @GetMapping("/storage/{filename:.+}/delete")
+  public String deleteFile(@PathVariable String filename) {
+    storageService.delete(filename);
+    return "redirect:/storage";
+  }
+
 }
