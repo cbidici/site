@@ -48,6 +48,11 @@
         <div class="d-flex">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
+              @if(page.hasRole("ADMIN"))
+                <a class="nav-link @if(page.isCurrentUri("/storage")) active text-decoration-underline @endif" href="/storage">Storage</a>
+              @endif
+            </li>
+            <li class="nav-item">
               @if(!page.isAuthenticated())
                 <a class="nav-link @if(page.isCurrentUri("/login")) active text-decoration-underline @endif" href="/login">Login</a>
               @else

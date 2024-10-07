@@ -1,11 +1,13 @@
 package com.cbidici.site.view.advice;
 
+import com.cbidici.site.media.StorageFileNotFoundException;
 import com.cbidici.site.post.PostNotFoundException;
 import com.cbidici.site.view.data.ErrorDetailResponse;
 import java.nio.file.AccessDeniedException;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.security.core.AuthenticationException;
@@ -68,6 +70,11 @@ public class ErrorHandler {
             new ErrorDetailResponse(HttpStatus.NOT_FOUND, "Sorry! The page that you are looking for is not available.")
         )
     );
+  }
+
+  @ExceptionHandler(StorageFileNotFoundException.class)
+  public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
+    return ResponseEntity.notFound().build();
   }
 
   @ExceptionHandler(value = Exception.class)
