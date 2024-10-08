@@ -20,7 +20,7 @@ content = @`
         <div class="row mb-2">
           <label for="title" class="col-sm-2 col-form-label">Title:</label>
           <div class="col-sm-10">
-            <input type="text" name="title" value="${post.title()}" id="title" class="form-control">
+            <input type="text" name="title" value="${post.title()}" id="title" class="form-control" maxlength="60">
           </div>
         </div>
         <div class="row mb-2">

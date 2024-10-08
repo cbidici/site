@@ -93,7 +93,7 @@ public class PostController {
   }
 
   @PreAuthorize("hasRole('ADMIN')")
-  @GetMapping("/posts/{id}/publish")
+  @PostMapping("/posts/{id}/publish")
   public String publishPost(@PathVariable("id") Long id) {
     postService.publish(id);
     var post = postService.get(id);
@@ -101,7 +101,7 @@ public class PostController {
   }
 
   @PreAuthorize("hasRole('ADMIN')")
-  @GetMapping("/posts/{id}/withdraw")
+  @PostMapping("/posts/{id}/withdraw")
   public String withDrawPost(@PathVariable("id") Long id) {
     postService.withdraw(id);
     var post = postService.get(id);
@@ -109,7 +109,7 @@ public class PostController {
   }
 
   @PreAuthorize("hasRole('ADMIN')")
-  @GetMapping("/posts/{id}/delete")
+  @PostMapping("/posts/{id}/delete")
   public String deletePost(@PathVariable("id") Long id) {
     postService.delete(id);
     return "redirect:/posts";

@@ -13,18 +13,34 @@ headElements = @`
 content = @`
   <div>
     <section class="mb-3">
-      <a class="link-primary" href="/posts">Back to Posts</a>
-      @if(page.hasRole("ADMIN"))
-        <span>
-          | <a class="link-primary" href="/posts/${post.id()}/update">Edit</a>
-          @if(post.status().equals("CREATED") || post.status().equals("WITHDRAWN"))
-            | <a class="link-primary" href="/posts/${post.id()}/publish">Publish</a>
-          @elseif(post.status().equals("PUBLISHED"))
-            | <a class="link-primary" href="/posts/${post.id()}/withdraw">Withdraw</a>
-          @endif
-          | <a class="link-primary" href="/posts/${post.id()}/delete" onclick="return confirm('Are you sure you want to delete this post?')">Delete</a>
-        </span>
-      @endif
+      <ul class="list-unstyled">
+        <li class="d-inline"><a style="float:left;" class="btn btn-link" href="/posts">Back to Posts</a></li>
+          @if(page.hasRole("ADMIN"))
+            <li class="d-inline"><a style="float:left;" class="btn btn-link" href="/posts/${post.id()}/update">Edit</a></li>
+            @if(post.status().equals("CREATED") || post.status().equals("WITHDRAWN"))
+              <li class="d-inline">
+                <form style="float:left;" action="/posts/${post.id()}/publish" method="post">
+                  <input type="hidden" name="_csrf" value="${page.getCsrfToken()}">
+                  <button type="submit" class="btn btn-link" onclick="return confirm('Are you sure you want to publish this post?')">Publish</button>
+                </form>
+              </li>
+            @elseif(post.status().equals("PUBLISHED"))
+              <li class="d-inline">
+                <form style="float:left;" action="/posts/${post.id()}/withdraw" method="post">
+                  <input type="hidden" name="_csrf" value="${page.getCsrfToken()}">
+                  <button type="submit" class="btn btn-link" onclick="return confirm('Are you sure you want to withdraw this post?')">Withdraw</button>
+                </form>
+              </li>
+            @endif
+          <li class="d-inline">
+            <form style="float:left;" action="/posts/${post.id()}/delete" method="post">
+              <input type="hidden" name="_csrf" value="${page.getCsrfToken()}">
+              <button type="submit" class="btn btn-link" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+            </form>
+          </li>
+        @endif
+      </ul>
+      <br>
     </section>
     <section class="mb-3">
       <h1>${post.title()}</h1>
@@ -35,3 +51,9 @@ content = @`
     </section>
   </div>
 `)
+
+
+Migrated My Blog Application from Thymeleaf to JTE
+
+Why and How I Migrated My Blog Application from Thymeleaf to JTE
+
