@@ -29,21 +29,24 @@ content = @`
                 <p></p>
                 <p class="card-text">${post.description()}</p>
               @endif
-              <p class="card-text">
+              <div class="row card-text">
                 @if(post.publishedAt()!=null)
-                  <small class="text-body-secondary">Published At ${post.publishedAt().toString()}</small>
-                  @if(page.hasRole("ADMIN"))
-                    <small class="text-body-secondary"> - </small>
-                  @endif
+                  <div class="col-lg-auto">
+                    <small class="text-body-secondary" style="white-space:nowrap;">Published At ${post.publishedAt().toString()}</small>
+                  </div>
                 @endif
                 @if(page.hasRole("ADMIN"))
-                  <small class="text-body-secondary">Created At ${post.createdAt().toString()}</small>
+                  <div class="col-lg-auto">
+                    <small class="text-body-secondary" style="white-space: nowrap;">Created At ${post.createdAt().toString()}</small>
+                  </div>
                 @endif
                 @if(page.hasRole("ADMIN"))
-                  !{var pillClass = post.status().equals("CREATED") ? "text-bg-primary" : post.status().equals("PUBLISHED") ? "text-bg-success" : post.status().equals("WITHDRAWN") ? "text-bg-secondary" : "";}
-                  <span class="float-end status-badge badge ${pillClass}">${post.status()}</span>
+                  <div class="col-lg mt-lg-0 mt-2">
+                    !{var pillClass = post.status().equals("CREATED") ? "text-bg-primary" : post.status().equals("PUBLISHED") ? "text-bg-success" : post.status().equals("WITHDRAWN") ? "text-bg-secondary" : "";}
+                    <span class="float-end status-badge badge ${pillClass}">${post.status()}</span>
+                  </div>
                 @endif
-              </p>
+              </div>
             </div>
           </a>
         </article>
