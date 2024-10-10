@@ -51,9 +51,3 @@ content = @`
     </section>
   </div>
 `)
-
-
-Migrated My Blog Application from Thymeleaf to JTE
-
-Why and How I Migrated My Blog Application from Thymeleaf to JTE
-
