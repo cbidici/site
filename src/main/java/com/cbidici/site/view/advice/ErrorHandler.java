@@ -1,6 +1,6 @@
 package com.cbidici.site.view.advice;
 
-import com.cbidici.site.media.StorageFileNotFoundException;
+import com.cbidici.site.storage.StorageFileNotFoundException;
 import com.cbidici.site.post.PostNotFoundException;
 import com.cbidici.site.view.data.ErrorDetailResponse;
 import java.nio.file.AccessDeniedException;
