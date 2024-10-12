@@ -1,7 +1,7 @@
 package com.cbidici.site.view;
 
-import com.cbidici.site.media.StorageFileNotFoundException;
-import com.cbidici.site.media.StorageService;
+import com.cbidici.site.storage.StorageFileNotFoundException;
+import com.cbidici.site.storage.StorageService;
 import com.cbidici.site.view.data.FileResponse;
 import java.io.IOException;
 import java.net.MalformedURLException;

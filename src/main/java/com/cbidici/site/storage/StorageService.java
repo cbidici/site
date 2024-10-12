@@ -1,6 +1,6 @@
-package com.cbidici.site.media;
+package com.cbidici.site.storage;
 
-import com.cbidici.site.media.config.StorageProperties;
+import com.cbidici.site.storage.config.StorageProperties;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;

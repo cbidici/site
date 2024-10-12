@@ -1,4 +1,4 @@
-package com.cbidici.site.media;
+package com.cbidici.site.storage;
 
 public class StorageFileNotFoundException extends StorageException {
 

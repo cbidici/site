@@ -1,4 +1,4 @@
-package com.cbidici.site.media.config;
+package com.cbidici.site.storage.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
