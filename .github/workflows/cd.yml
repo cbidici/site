@@ -32,7 +32,7 @@ jobs:
         run: mvn install -Dmaven.test.skip=true
       - name: Build & Push Release Image
         run: |
-          docker build . --tag cbidici/${{ github.event.repository.name }}:${{ steps.version.outputs.version }} \
+          docker build --build-arg VERSION=${{ steps.version.outputs.version }} . --tag cbidici/${{ github.event.repository.name }}:${{ steps.version.outputs.version }} \
           --label author="${{ env.GIT_COMMIT_AUTHOR_NAME }}" \
           --label git_commit="${{ github.sha }}" \
           --label git_commit_short="${{ env.GIT_COMMIT_SHORT_SHA }}" \

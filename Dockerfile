@@ -1,3 +1,5 @@
+ARG VERSION="0.0.1-SNAPSHOT"
+
 # Use an official OpenJDK runtime as a parent image
 FROM openjdk:21-jdk
 
@@ -5,7 +7,7 @@ FROM openjdk:21-jdk
 WORKDIR /app
 
 # Copy the Spring Boot JAR file from the target directory to the container
-COPY target/site-0.0.1-SNAPSHOT.jar /app/site-0.0.1-SNAPSHOT.jar
+COPY target/site-${VERSION}.jar /app/site-${VERSION}.jar
 
 # Create a directory for the SQLite database inside the container
 RUN mkdir -p /app/db
@@ -14,4 +16,4 @@ RUN mkdir -p /app/db
 EXPOSE 8080
 
 # Run the Spring Boot application
-ENTRYPOINT ["java", "-jar", "site-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "site-${VERSION}.jar"]
