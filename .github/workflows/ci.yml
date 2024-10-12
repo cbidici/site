@@ -28,7 +28,7 @@ jobs:
       - name: Run Integration Tests
         run: mvn test -P integration
       - name: Report
-        uses: mikepenz/action-junit-report@v3
+        uses: mikepenz/action-junit-report@v4
         if: ${{ always() }}
         with:
           report_paths: '**/target/surefire-reports/*.xml'
