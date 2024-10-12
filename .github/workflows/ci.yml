@@ -1,4 +1,4 @@
-name: Build
+name: CI
 on:
   workflow_dispatch:
   pull_request:
@@ -28,10 +28,7 @@ jobs:
       - name: Run Integration Tests
         run: mvn test -P integration
       - name: Report
-        uses: dorny/test-reporter@v1
-        if: always()
+        uses: mikepenz/action-junit-report@v3
+        if: ${{ always() }}
         with:
-          name: Maven Tests
-          path: '**/target/surefire-reports/*.xml'
-          reporter: java-junit
-          fail-on-error: true
+          report_paths: '**/target/surefire-reports/*.xml'
