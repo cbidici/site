@@ -27,8 +27,11 @@ jobs:
         run: mvn test -P unit
       - name: Run Integration Tests
         run: mvn test -P integration
-      - name: Run jUnit
-        uses: mikepenz/action-junit-report@v3
-        if: ${{ always() }}
+      - name: Report
+        uses: dorny/test-reporter@v1
+        if: always()
         with:
-          report_paths: '**/target/surefire-reports/*.xml'
+          name: Maven Tests
+          path: '**/target/surefire-reports/*.xml'
+          reporter: java-junit
+          fail-on-error: true
