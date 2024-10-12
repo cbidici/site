@@ -7,12 +7,12 @@ on:
       - 'reopened'
       - 'closed'
       - 'synchronize'
-
+permissions:
+  checks: write
+  pull-requests: write
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
