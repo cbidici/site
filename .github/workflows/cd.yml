@@ -28,8 +28,8 @@ jobs:
       - name: Set New Maven Version
         run: |
           mvn versions:set -DnewVersion=${{ steps.version.outputs.version }}
-      - name: Maven Deploy
-        run: mvn deploy -Dmaven.test.skip=true
+      - name: Maven Install
+        run: mvn install -Dmaven.test.skip=true
       - name: Build & Push Release Image
         run: |
           docker build . --tag cbidici/${{ github.event.repository.name }}:${{ steps.version.outputs.version }} \
