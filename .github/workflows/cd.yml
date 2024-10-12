@@ -1,0 +1,39 @@
+name: CD
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+jobs:
+  build:
+    if: ${{ github.event.pull_request.merged }}
+    name: 'Build & Publish'
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ github.event.release.tag_name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Calculate Release Tag
+        run: echo "$(date +%Y.%-m.%-d-%H%M%S)" >> $VERSION
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - name: Set New Maven Version
+        run: |
+          mvn versions:set -DnewVersion=$VERSION
+      - name: Maven Deploy
+        run: mvn deploy -Dmaven.test.skip=true
+      - name: Build & Push Release Image
+        run: |
+          docker build . --tag cbidici/${{ github.event.repository.name }}:${{ env.VERSION }} \
+          --label author="${{ env.GIT_COMMIT_AUTHOR_NAME }}" \
+          --label git_commit="${{ github.sha }}" \
+          --label git_commit_short="${{ env.GIT_COMMIT_SHORT_SHA }}" \
+          --label version="${{ env.VERSION }}" \
+          --label repository="${{ github.event.repository.name }}"
+          docker push cbidici/${{ github.event.repository.name }}:${{ env.VERSION }}
