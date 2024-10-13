@@ -17,7 +17,7 @@ jobs:
     name: CI
     uses: ./.github/workflows/ci.yml
   build:
-    needs: [CI]
+    needs: [test]
     if: ${{ github.event.pull_request.merged }} || ${{github.event.workflow_dispatch}}
     name: 'Build & Publish'
     runs-on: ubuntu-latest
