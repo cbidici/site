@@ -7,7 +7,7 @@ FROM openjdk:21-jdk
 WORKDIR /app
 
 # Copy the Spring Boot JAR file from the target directory to the container
-COPY target/site-*-app.jar /app/site.jar
+COPY target/site-*.jar /app/site.jar
 
 # Create a directory for the SQLite database inside the container
 RUN mkdir -p /app/db
