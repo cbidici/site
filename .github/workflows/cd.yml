@@ -34,10 +34,7 @@ jobs:
         run: echo "::set-output name=version::$(date +%Y.%-m.%-d-%H%M%S)"
       - name: Build & Push Release Image
         run: |
-          docker build . --tag cbidici/${{ github.event.repository.name }}:${{ steps.version.outputs.version }} \
-          --label author="${{ env.GIT_COMMIT_AUTHOR_NAME }}" \
-          --label git_commit="${{ github.sha }}" \
-          --label git_commit_short="${{ env.GIT_COMMIT_SHORT_SHA }}" \
-          --label version="${{ steps.version.outputs.version }}" \
-          --label repository="${{ github.event.repository.name }}"
-          docker push cbidici/${{ github.event.repository.name }}:${{ steps.version.outputs.version }}
+          docker build . --tag cbidici/site:${{ steps.version.outputs.version }}
+          docker push cbidici/site:${{ steps.version.outputs.version }}
+          docker tag cbidici/site:${{ steps.version.outputs.version }} cbidici/site:latest
+          docker push cbidici/site:latest
