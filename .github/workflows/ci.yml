@@ -6,7 +6,6 @@ on:
     types:
       - 'opened'
       - 'reopened'
-      - 'closed'
       - 'synchronize'
 permissions:
   checks: write
