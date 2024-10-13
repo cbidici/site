@@ -10,6 +10,8 @@ defaults:
   run:
     shell: bash
 jobs:
+  test:
+    uses: ./.github/workflows/ci.yml
   build:
     if: ${{ github.event.pull_request.merged }} || ${{github.event.workflow_dispatch}}
     name: 'Build & Publish'
