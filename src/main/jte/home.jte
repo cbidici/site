@@ -11,6 +11,7 @@
 page = page,
 headElements = @`
   <title>Coşkun Bıdıcı's Sandbox</title>
+  <meta name="description" content="Self developed, hosted and authored software engineering blog by Coşkun Bıdıcı">
 `,
 content = @`
   <div class="container">

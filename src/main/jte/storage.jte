@@ -9,7 +9,8 @@
 @template.base(
 page = page,
 headElements = @`
-    <title>Coşkun Bıdıcı's Sandbox - Storage</title>
+  <title>Coşkun Bıdıcı's Sandbox - Storage</title>
+  <meta name="description" content="Self developed, hosted and authored software engineering blog by Coşkun Bıdıcı">
 `,
 content = @`
   <div>

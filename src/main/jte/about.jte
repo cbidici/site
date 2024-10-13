@@ -6,6 +6,7 @@ page = page,
 headElements = @`
   <link href="/css/profile.css" rel="stylesheet">
   <title>About Coşkun Bıdıcı</title>
+  <meta name="description" content="Self developed, hosted and authored software engineering blog by Coşkun Bıdıcı">
 `,
 content = @`
   <div>
