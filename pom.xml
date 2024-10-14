@@ -152,7 +152,20 @@
                 </resource>
                 <resource>
                   <directory>src/test/integration/resources</directory>
-                </resource>
+                </resource><execution>
+                <id>add-test-resource</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>add-test-resource</goal>
+                </goals>
+                <configuration>
+                  <resources>
+                    <resource>
+                      <directory>src/test/integration/resources</directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
               </resources>
             </configuration>
           </execution>
