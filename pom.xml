@@ -148,9 +148,6 @@
             <configuration>
               <resources>
                 <resource>
-                  <directory>src/test/unit/resources</directory>
-                </resource>
-                <resource>
                   <directory>src/test/integration/resources</directory>
                 </resource>
               </resources>
