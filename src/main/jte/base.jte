@@ -15,13 +15,14 @@
     <meta name="description" content="Self developed, hosted and authored software engineering blog by Coşkun Bıdıcı">
   @endif
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PLPHEQBGX"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BZHBWKJ4Z5"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
-    gtag('config', 'G-8PLPHEQBGX');
+  
+    gtag('config', 'G-BZHBWKJ4Z5');
   </script>
   <meta charset="utf-8">
   <meta name="keywords" content="Software Engineering Blog, Blog, Portfolio">
