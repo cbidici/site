@@ -1,6 +1,6 @@
 ARG VERSION="0.0.1-SNAPSHOT"
 
-FROM openjdk:21-jdk
+FROM eclipse-temurin:21.0.11_10-jre-jammy
 
 WORKDIR /app
 COPY target/site-*.jar /app/site.jar
