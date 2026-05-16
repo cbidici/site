@@ -21,8 +21,43 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-  
     gtag('config', 'G-BZHBWKJ4Z5');
+    // Set default consent to 'denied' for privacy-by-default compliance
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500 // Gives custom banner 500ms to check for existing cookies
+    });
+    // Show the banner only if the user hasn't made a choice yet
+    document.addEventListener("DOMContentLoaded", function() {
+      if (!localStorage.getItem("user_cookie_consent")) {
+        document.getElementById("custom-consent-banner").style.display = "block";
+      }
+    });
+    function submitCustomConsent(status) {
+      // Save choice locally so the banner doesn't pop up on the next page load
+      localStorage.setItem("user_cookie_consent", status);
+      // Hide the banner
+      document.getElementById("custom-consent-banner").style.display = "none";
+      // Update Google Consent Mode dynamically
+      gtag('consent', 'update', {
+        'analytics_storage': status,
+        'ad_storage': status,
+        'ad_user_data': status,
+        'ad_personalization': status
+      });
+    }
+    var savedConsent = localStorage.getItem("user_cookie_consent");
+    if (savedConsent === 'granted') {
+      gtag('consent', 'update', {
+        'analytics_storage': 'granted',
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted'
+      });
+    }
   </script>
   <meta charset="utf-8">
   <meta name="keywords" content="Software Engineering Blog, Blog, Portfolio">
@@ -94,5 +129,10 @@
   </div>
 </div>
 <script async src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+<div id="custom-consent-banner" style="display:none; position:fixed; bottom:0; width:100%; background:#fff; padding:20px; box-shadow:0 -2px 10px rgba(0,0,0,0.1); z-index:9999;">
+  <p>I use cookies to analyze my traffic. Do you consent to my cookies?</p>
+  <button onclick="submitCustomConsent('granted')">Accept All</button>
+  <button onclick="submitCustomConsent('denied')">Decline</button>
+</div>
 </body>
 </html>
